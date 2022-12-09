@@ -13,6 +13,7 @@ namespace LetrasBlog.Infraestructure.Entities
             public int Code { get; set; }
             public string Message { get; set; }
             public Data Detail { get; set; }
+            public List<BooksDetail> Books { get; set; }
         }
         public class Data
         {
@@ -25,6 +26,7 @@ namespace LetrasBlog.Infraestructure.Entities
         }
         public class BooksDetail
         {
+            public int ID_LIBRO { get; set; }
             public string Title { get; set; }
             public string Subtitle { get; set; }
             public string Isbn13 { get; set; }

@@ -1,0 +1,90 @@
+﻿@page "/books"
+@inject IDialogService Dialog
+@using LetrasBlog.Infraestructure.Entities;
+@using System.Net.Http;
+@using Newtonsoft.Json;
+
+
+<PageTitle>Libros</PageTitle>
+
+<MudText Typo="Typo.h4" GutterBottom="true">Libros</MudText>
+<br />
+<MudButton Variant="Variant.Filled" Color="Color.Primary" IconClass="@Icons.Material.Filled.PlusOne">
+    Capturar nuevos registros
+</MudButton>
+<br />
+@if(response == null)
+{
+    <label>Cargando...</label>
+}
+else
+{
+  
+    <div class="row d-flex mt-2">
+        <div class="col-12">
+        <MudTable Items="@_ArticlesList" Dense="true" >
+            <ToolBarContent>
+                <MudText Typo="Typo.h6">Registros</MudText>
+                <MudSpacer />
+            </ToolBarContent>
+            <HeaderContent>
+                <MudTh>Id</MudTh>
+                <MudTh>Título</MudTh>
+                <MudTh>Sub Título</MudTh>
+                <MudTh>Isbn13</MudTh>
+                <MudTh>Price</MudTh>
+                <MudTh>Image</MudTh>
+                <MudTh>Url</MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd DataLabel="Nr">@context.ID_LIBRO</MudTd>
+                <MudTd DataLabel="Sign">@context.Title</MudTd>
+                <MudTd DataLabel="Name">@context.Subtitle</MudTd>
+                <MudTd DataLabel="Sign">@context.Isbn13</MudTd>
+                <MudTd DataLabel="Name">@context.Price</MudTd>
+                <MudTd DataLabel="Sign">@context.Image</MudTd>
+                <MudTd DataLabel="Name">@context.Url</MudTd>
+            </RowTemplate>
+            <PagerContent>
+                <MudTablePager />
+            </PagerContent>
+        </MudTable>
+    </div>
+    </div>
+}
+
+
+@code {
+    DialogOptions maxWidth = new DialogOptions() { MaxWidth = MaxWidth.ExtraExtraLarge, FullWidth = true };
+
+    private static readonly HttpClient client = new HttpClient();
+    public List<Books.BooksDetail> _ArticlesList { get ; set ; } = new List<Books.BooksDetail>() ;
+    public Books.response ArticlesResponse { get ; set ; } = new Books.response() ;
+    public string response;
+    public string searchString1 = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            var content = await client.GetAsync("https://localhost:44342" + "/api/Books/GetBooks");
+            //Imprimir en consola
+            response = content.Content.ReadAsStringAsync().ToString();
+            //Console.WriteLine(await content.Content.ReadAsStringAsync());
+
+            //Procesar respuesta
+            var responseString = await content.Content.ReadAsStringAsync();
+            ArticlesResponse = JsonConvert.DeserializeObject<Books.response>(responseString);
+            _ArticlesList = ArticlesResponse.Books;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Error: " + ex.ToString());
+        }
+    }
+
+    private void OpenDialog(DialogOptions options)
+    {
+        //Dialog.Show<AddArticleModal>("Crear Artículo", options);
+    }
+}

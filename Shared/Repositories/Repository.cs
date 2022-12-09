@@ -132,5 +132,36 @@ namespace LetrasBlog.Client.Repositories
 
             return BooksData;
         }
+
+        public async Task<Books.response> GetBooks()
+        {
+            Books.response ArticlesData = new Books.response();
+            Books.BooksDetail responseDetail = new Books.BooksDetail();
+
+            var db = dbConection();
+            var procedure = "[dbo].[GET_BOOKS]";
+
+            var Data = await db.QueryAsync<Books.BooksDetail>(procedure, commandType: CommandType.StoredProcedure); 
+
+            ArticlesData = new Books.response
+            {
+                Code = 0,
+                Message = "Success",
+                Books = Data.Select(c => new Books.BooksDetail()
+                {
+                    ID_LIBRO = c.ID_LIBRO,
+                    Title = c.Title,
+                    Subtitle = c.Subtitle,
+                    Price = c.Price,
+                    Image = c.Image,
+                    Isbn13 = c.Isbn13,
+                    Url = c.Url
+                }).ToList()
+
+                
+            };
+
+            return ArticlesData;
+        }
     }
 }

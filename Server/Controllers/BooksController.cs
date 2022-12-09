@@ -37,5 +37,18 @@ namespace LetrasBlog.Server.Controllers
             }
             return Ok(post);
         }
+
+        [Route("GetBooks")]
+        [HttpGet]
+        public async Task<IActionResult> GetBooks()
+        {
+            var post = await _RepositoryValidation.GetBooks();
+
+            if (post == null)
+            {
+                throw new BusinessExceptions("Error en obtención");
+            }
+            return Ok(post);
+        }
     }
 }

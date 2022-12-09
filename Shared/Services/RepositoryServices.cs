@@ -71,5 +71,18 @@ namespace LetrasBlog.Infraestructure.Services
 
             return response;
         }
+        public Task<Books.response> GetBooks()
+        {
+            _logger.LogInformation("Request to endpoint {endpoint} {verb}", "/api/" + TAG_API + "", TAG_VERB);
+            var response = _repository.GetBooks();
+            if (response.Result == null)
+            {
+                _logger.LogError("Error Request from endpoint {endpoint} {verb}", "/api/" + TAG_API + "", " - " + TAG_VERB +
+                    " - " + "[ No data available ]");
+            }
+            _logger.LogInformation("Response from endpoint {endpoint} {verb}", "/api/" + TAG_API + "", " - " + TAG_VERB  + " - OK");
+
+            return response;
+        }
     }
 }
