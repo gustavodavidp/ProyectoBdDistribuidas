@@ -31,10 +31,10 @@
     public async Task DeleteServer()
     {
         //In a real world scenario this bool would probably be a service to delete the item from api/database
-        var content = await client.DeleteAsync("https://localhost:44342" + "/api/Books/GetBooks");
+        var content = await client.DeleteAsync("https://localhost:44342" + "/api/Books/DeleteBooks/" + id);
             //Imprimir en consola
         var  response = content.Content.ReadAsStringAsync().ToString();
         Snackbar.Add("Libro eliminado", Severity.Success);
-        //MudDialog.Close(DialogResult.Ok(server.Id));
+        MudDialog.Close(DialogResult.Ok(id));
     }
 }

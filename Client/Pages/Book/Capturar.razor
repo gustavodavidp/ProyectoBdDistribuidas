@@ -1,5 +1,41 @@
-﻿<h3>Capturar</h3>
+﻿@page "/capturar"
+
+@using LetrasBlog.Infraestructure.Entities;
+@using System.Net.Http;
+@using Newtonsoft.Json;
+@inject IDialogService Dialog
+@inject ISnackbar Snackbar
+
+<PageTitle>Capturar</PageTitle>
+
+<MudText Typo="Typo.h3" GutterBottom="true">Ingresar nuevos registros mediante API</MudText>
+
+<MudButton Color="Color.Primary" Variant="Variant.Filled" @onclick="IncrementCount">Ingresar</MudButton>
+
 
 @code {
+    private int currentCount = 0;
+    private static readonly HttpClient client = new HttpClient();
+    public Books.response ArticlesResponse { get ; set ; } = new Books.response();
 
+    public async Task IncrementCount()
+    {
+         try
+        {
+            var content = await client.GetAsync("https://localhost:44342" + "/api/Books/InsertRespuesta");
+            //Imprimir en consola
+            var response = content.Content.ReadAsStringAsync().ToString();
+            //Console.WriteLine(await content.Content.ReadAsStringAsync());
+
+            //Procesar respuesta
+            var responseString = await content.Content.ReadAsStringAsync();
+            ArticlesResponse = JsonConvert.DeserializeObject<Books.response>(responseString);
+
+            Snackbar.Add("Libros añadidos", Severity.Success);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Error: " + ex.ToString());
+        }
+    }
 }
