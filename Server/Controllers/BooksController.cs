@@ -63,5 +63,18 @@ namespace LetrasBlog.Server.Controllers
             }
             return Ok(post);
         }
+
+        [Route("UpdateBooks")]
+        [HttpPost]
+        public async Task<IActionResult> UpdateBooks(Books.BooksDetail book)
+        {
+            var post = await _RepositoryValidation.UpdateBooks(book);
+
+            if (post == null)
+            {
+                throw new BusinessExceptions("Error en eliminación");
+            }
+            return Ok(post);
+        }
     }
 }

@@ -1,0 +1,132 @@
+﻿@using Infraestructure.Entities;
+@using System.Text
+@using Newtonsoft.Json
+
+@inject ISnackbar Snackbar
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Update" Class="mr-3 mb-n1"/>
+            ¿Desea Actualizar el libro?
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <EditForm id="@MyID" Model="book" OnValidSubmit="DeleteServer">
+            <DataAnnotationsValidator />
+
+            <div class="row d-flex">
+                <div class="col-6">
+                    <label for="name">Titulo: </label>
+                </div>
+                <div class="col-6">
+                    <MudTextField Id="name" Class="form-control" @bind-Value="@book.Title"> 
+                </MudTextField>
+                </div>
+                
+
+            </div> 
+            <div class="row d-flex">
+                <div class="col-6">
+                    <label for="name">Subtitulo: </label>
+                </div>
+                <div class="col-6">
+                    <MudTextField Id="name" Class="form-control" @bind-Value="@book.Subtitle"> 
+                </MudTextField>
+                </div>
+                
+
+            </div> 
+            <div class="row d-flex">
+                <div class="col-6">
+                    <label for="name">Isbn13: </label>
+                </div>
+                <div class="col-6">
+                    <MudTextField Id="name" Class="form-control" @bind-Value="@book.Isbn13"> 
+                </MudTextField>
+                </div>
+                
+
+            </div> 
+
+            <div class="row d-flex">
+                <div class="col-6">
+                    <label for="name">Precio: </label>
+                </div>
+                <div class="col-6">
+                    <MudTextField Id="name" Class="form-control" @bind-Value="@book.Price"> 
+                </MudTextField>
+                </div>
+                
+
+            </div> 
+            <div class="row d-flex">
+                <div class="col-6">
+                    <label for="name">Imagen: </label>
+                </div>
+                <div class="col-6">
+                    <MudTextField Id="name" Class="form-control" @bind-Value="@book.Image"> 
+                </MudTextField>
+                </div>
+                
+
+            </div> 
+            <div class="row d-flex">
+                <div class="col-6">
+                    <label for="name">Url: </label>
+                </div>
+                <div class="col-6">
+                    <MudTextField Id="name" Class="form-control" @bind-Value="@book.Url"> 
+                </MudTextField>
+                </div>
+                
+
+            </div> 
+        </EditForm>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancelar</MudButton>
+        <button type="submit" form="@MyID" class="btn btn-primary">Guardar</button>
+    </DialogActions>
+</MudDialog>
+@code {
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+    private string MyID = "myid";
+
+    [Parameter] public Books.BooksDetail book { get; set; } 
+    private static readonly HttpClient client = new HttpClient();
+
+    private void Cancel()
+    {
+        MudDialog.Cancel();
+    }
+
+    public async Task DeleteServer()
+    {
+        //In a real world scenario this bool would probably be a service to delete the item from api/database
+        var parameters = new
+        {
+            ID_LIBRO = book.ID_LIBRO,
+            Title = book.Title,
+            Subtitle = book.Subtitle,
+            Price = book.Price,
+            Image = book.Image,
+            Url = book.Url,
+            Isbn13 = book.Isbn13
+        };
+        var json = JsonConvert.SerializeObject(parameters);
+        var stringContent = new StringContent(json, UnicodeEncoding.UTF8, "application/json");
+
+        // This would be the like http://www.uber.com
+        client.BaseAddress = new Uri("https://localhost:44342/api/Books/UpdateBooks");
+
+        // serialize your json using newtonsoft json serializer then add it to the StringContent
+        var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+        // method address would be like api/callUber:SomePort for example
+        var result = await client.PostAsync("https://localhost:44342/api/Books/UpdateBooks", content);
+        string resultContent = await result.Content.ReadAsStringAsync();
+        Snackbar.Add("Libro actualizado", Severity.Success);
+        MudDialog.Close(DialogResult.Ok(book));
+    }
+}

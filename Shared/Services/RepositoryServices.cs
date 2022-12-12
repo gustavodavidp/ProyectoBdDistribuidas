@@ -86,14 +86,28 @@ namespace LetrasBlog.Infraestructure.Services
         }
         public Task<Books.response> DeleteBooks(int id)
         {
-            _logger.LogInformation("Request to endpoint {endpoint} {verb}", "/api/" + TAG_API + "", TAG_VERB);
+            _logger.LogInformation("Request to endpoint {endpoint} DELETE", "/api/" + TAG_API + "", TAG_VERB);
             var response = _repository.DeleteBooks(id);
             if (response.Result == null)
             {
-                _logger.LogError("Error Request from endpoint {endpoint} {verb}", "/api/" + TAG_API + "", " - " + TAG_VERB +
+                _logger.LogError("Error Request from endpoint {endpoint} DELETE", "/api/" + TAG_API + "", " - " + TAG_VERB +
                     " - " + "[ No data available ]");
             }
-            _logger.LogInformation("Response from endpoint {endpoint} {verb}", "/api/" + TAG_API + "", " - " + TAG_VERB  + " - OK");
+            _logger.LogInformation("Response from endpoint {endpoint} DELETE", "/api/" + TAG_API + "", " - " + TAG_VERB  + " - OK");
+
+            return response;
+        }
+
+        public Task<Books.response> UpdateBooks(Books.BooksDetail book)
+        {
+            _logger.LogInformation("Request to endpoint {endpoint} UPDATE", "/api/" + TAG_API + "", TAG_VERB);
+            var response = _repository.UpdateBooks(book);
+            if (response.Result == null)
+            {
+                _logger.LogError("Error Request from endpoint {endpoint} UPDATE", "/api/" + TAG_API + "", " - " + TAG_VERB +
+                    " - " + "[ No data available ]");
+            }
+            _logger.LogInformation("Response from endpoint {endpoint} UPDATE", "/api/" + TAG_API + "", " - " + TAG_VERB  + " - OK");
 
             return response;
         }

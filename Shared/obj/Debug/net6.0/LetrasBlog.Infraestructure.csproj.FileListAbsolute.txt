@@ -10,6 +10,9 @@ D:\source\repos\LetrasBlog\Shared\obj\Debug\net6.0\LetrasBlog.Infraestructure.dl
 D:\source\repos\LetrasBlog\Shared\obj\Debug\net6.0\refint\LetrasBlog.Infraestructure.dll
 D:\source\repos\LetrasBlog\Shared\obj\Debug\net6.0\LetrasBlog.Infraestructure.pdb
 D:\source\repos\LetrasBlog\Shared\obj\Debug\net6.0\ref\LetrasBlog.Infraestructure.dll
+D:\source\repos\BDDistribuidas\Shared\bin\Debug\net6.0\LetrasBlog.Infraestructure.deps.json
+D:\source\repos\BDDistribuidas\Shared\bin\Debug\net6.0\LetrasBlog.Infraestructure.dll
+D:\source\repos\BDDistribuidas\Shared\bin\Debug\net6.0\LetrasBlog.Infraestructure.pdb
 D:\source\repos\BDDistribuidas\Shared\obj\Debug\net6.0\LetrasBlog.Infraestructure.csproj.AssemblyReference.cache
 D:\source\repos\BDDistribuidas\Shared\obj\Debug\net6.0\LetrasBlog.Infraestructure.GeneratedMSBuildEditorConfig.editorconfig
 D:\source\repos\BDDistribuidas\Shared\obj\Debug\net6.0\LetrasBlog.Infraestructure.AssemblyInfoInputs.cache
@@ -18,7 +21,4 @@ D:\source\repos\BDDistribuidas\Shared\obj\Debug\net6.0\LetrasBlog.Infraestructur
 D:\source\repos\BDDistribuidas\Shared\obj\Debug\net6.0\LetrasBlog.Infraestructure.dll
 D:\source\repos\BDDistribuidas\Shared\obj\Debug\net6.0\refint\LetrasBlog.Infraestructure.dll
 D:\source\repos\BDDistribuidas\Shared\obj\Debug\net6.0\LetrasBlog.Infraestructure.pdb
-D:\source\repos\BDDistribuidas\Shared\bin\Debug\net6.0\LetrasBlog.Infraestructure.deps.json
-D:\source\repos\BDDistribuidas\Shared\bin\Debug\net6.0\LetrasBlog.Infraestructure.dll
-D:\source\repos\BDDistribuidas\Shared\bin\Debug\net6.0\LetrasBlog.Infraestructure.pdb
 D:\source\repos\BDDistribuidas\Shared\obj\Debug\net6.0\ref\LetrasBlog.Infraestructure.dll

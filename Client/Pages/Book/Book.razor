@@ -10,9 +10,6 @@
 
 <MudText Typo="Typo.h4" GutterBottom="true">Libros</MudText>
 <br />
-<MudButton Variant="Variant.Filled" Color="Color.Primary" IconClass="@Icons.Material.Filled.PlusOne">
-    Capturar nuevos registros
-</MudButton>
 <br />
 @if(response == null)
 {
@@ -36,6 +33,7 @@ else
                 <MudTh>Price</MudTh>
                 <MudTh>Image</MudTh>
                 <MudTh>Url</MudTh>
+                <MudTh>Actualizar</MudTh>
                 <MudTh>Eliminar</MudTh>
             </HeaderContent>
             <RowTemplate>
@@ -46,7 +44,8 @@ else
                 <MudTd DataLabel="Name">@context.Price</MudTd>
                 <MudTd DataLabel="Sign">@context.Image</MudTd>
                 <MudTd DataLabel="Name">@context.Url</MudTd>
-                <MudTd DataLabel="Name"><MudButton Variant="Variant.Text" Color="Color.Error" OnClick="@((e) => OpenDialog(context.ID_LIBRO))">Eliminar</MudButton></MudTd>
+                <MudTd DataLabel="Name"><MudButton Variant="Variant.Outlined" Color="Color.Warning" OnClick="@((e) => UpdateDialog(context))">Actualizar</MudButton></MudTd>
+                <MudTd DataLabel="Name"><MudButton Variant="Variant.Outlined" Color="Color.Error" OnClick="@((e) => OpenDialog(context.ID_LIBRO))">Eliminar</MudButton></MudTd>
             </RowTemplate>
             <PagerContent>
                 <MudTablePager />
@@ -92,6 +91,31 @@ else
         var parameters = new DialogParameters { ["id"]=id };
 
         var dialog = Dialog.Show<Delete>("Eliminar Libro", parameters);
+        var result = await dialog.Result;
+
+        if (!result.Cancelled)
+        {
+            //In a real world scenario wce would reload the data from the source here since we "removed" it in the dialog already.
+           //Snackbar.Add("Cancelado", Severity.Warning);
+        }
+
+        var content = await client.GetAsync("https://localhost:44342" + "/api/Books/GetBooks");
+        //Imprimir en consola
+        response = content.Content.ReadAsStringAsync().ToString();
+        //Console.WriteLine(await content.Content.ReadAsStringAsync());
+
+        //Procesar respuesta
+        var responseString = await content.Content.ReadAsStringAsync();
+        ArticlesResponse = JsonConvert.DeserializeObject<Books.response>(responseString);
+        _ArticlesList = ArticlesResponse.Books;
+    }
+
+    public async Task UpdateDialog(Books.BooksDetail book)
+    {
+        //Dialog.Show<AddArticleModal>("Crear Artículo", options);
+        var parameters = new DialogParameters { ["book"]=book };
+
+        var dialog = Dialog.Show<Actualizar>("Actualizar Libro", parameters);
         var result = await dialog.Result;
 
         if (!result.Cancelled)
