@@ -13,6 +13,7 @@ namespace LetrasBlog.Client.Repositories
         //Task<Books.response> InsertBooks();
         Task<Books.response> InsertRespuesta();
         Task<Books.response> GetBooks();
+        Task<Books.response> DeleteBooks(int id);
 
     }
 }

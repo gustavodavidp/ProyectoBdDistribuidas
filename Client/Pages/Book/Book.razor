@@ -1,9 +1,10 @@
 ﻿@page "/books"
-@inject IDialogService Dialog
+
 @using LetrasBlog.Infraestructure.Entities;
 @using System.Net.Http;
 @using Newtonsoft.Json;
-
+@inject IDialogService Dialog
+@inject ISnackbar Snackbar
 
 <PageTitle>Libros</PageTitle>
 
@@ -35,6 +36,7 @@ else
                 <MudTh>Price</MudTh>
                 <MudTh>Image</MudTh>
                 <MudTh>Url</MudTh>
+                <MudTh>Eliminar</MudTh>
             </HeaderContent>
             <RowTemplate>
                 <MudTd DataLabel="Nr">@context.ID_LIBRO</MudTd>
@@ -42,8 +44,9 @@ else
                 <MudTd DataLabel="Name">@context.Subtitle</MudTd>
                 <MudTd DataLabel="Sign">@context.Isbn13</MudTd>
                 <MudTd DataLabel="Name">@context.Price</MudTd>
-                <MudTd DataLabel="Sign">@context.Image</MudTd>
+                <MudTd DataLabel="Sign"><img src ="@string.Join(context.Image, ".png")" style="height: 45px; width: 40px"/>@context.Image</MudTd>
                 <MudTd DataLabel="Name">@context.Url</MudTd>
+                <MudTd DataLabel="Name"><MudButton Variant="Variant.Text" Color="Color.Error" OnClick="@((e) => OpenDialog(context.ID_LIBRO))">Eliminar</MudButton></MudTd>
             </RowTemplate>
             <PagerContent>
                 <MudTablePager />
@@ -83,8 +86,28 @@ else
         }
     }
 
-    private void OpenDialog(DialogOptions options)
+    public async Task OpenDialog(int id)
     {
         //Dialog.Show<AddArticleModal>("Crear Artículo", options);
+        var parameters = new DialogParameters { ["id"]=id };
+
+        var dialog = Dialog.Show<Delete>("Eliminar Libro", parameters);
+        var result = await dialog.Result;
+
+        if (!result.Cancelled)
+        {
+            //In a real world scenario wce would reload the data from the source here since we "removed" it in the dialog already.
+           Snackbar.Add("Cancelado", Severity.Warning);
+        }
+
+        var content = await client.GetAsync("https://localhost:44342" + "/api/Books/GetBooks");
+        //Imprimir en consola
+        response = content.Content.ReadAsStringAsync().ToString();
+        //Console.WriteLine(await content.Content.ReadAsStringAsync());
+
+        //Procesar respuesta
+        var responseString = await content.Content.ReadAsStringAsync();
+        ArticlesResponse = JsonConvert.DeserializeObject<Books.response>(responseString);
+        _ArticlesList = ArticlesResponse.Books;
     }
 }

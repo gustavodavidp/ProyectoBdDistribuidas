@@ -204,15 +204,15 @@
       "mscorlib.dll": "sha256-wmk56X5dbt29rrFZKEFpOFjotkZA+JSxA4fqkgmBsOU=",
       "netstandard.dll": "sha256-CvlfDmNgFRYT7l\/xZKu91FlbTFyLG\/5cH7YX63k9ghE=",
       "System.Private.CoreLib.dll": "sha256-aF4imeOpA59D6F5qCLabzkeY7MvRZzNYzavhB\/bdxvM=",
-      "LetrasBlog.Infraestructure.dll": "sha256-n49b11eMFaHShnPMYdeC2huqF4z3c6XAdCvO52w67n4=",
-      "LetrasBlog.Client.dll": "sha256-lsNjZNzjAaM6DJwaid+5nPZnL5VLEONKuESnn2upIf0="
+      "LetrasBlog.Infraestructure.dll": "sha256-I0WFPEmIpYsW+4vbKKJHyVVZPxGGlTebErLhYTtuYm0=",
+      "LetrasBlog.Client.dll": "sha256-1QdaHTpGG4QXET5p8nU+Jp+tp5VY3vRgBmQDuN+XA10="
     },
     "extensions": null,
     "lazyAssembly": null,
     "libraryInitializers": null,
     "pdb": {
-      "LetrasBlog.Infraestructure.pdb": "sha256-7rWYodOSoz8E2h5VbCOzJtYnuFWv598NkX0sPYjTy04=",
-      "LetrasBlog.Client.pdb": "sha256-a9B8hlWAo6DjfXNkCY1pHf0VQYcR4oXpGscHXlAAc18="
+      "LetrasBlog.Infraestructure.pdb": "sha256-2Hy1fCDeWNJrstvD9xinyQkuPNVT8\/NXG1GBFvFMmqI=",
+      "LetrasBlog.Client.pdb": "sha256-wCWd5xjmkX2\/91\/t4zCu3a6N3ScqyUxy6YTgnH0jys0="
     },
     "runtime": {
       "dotnet.6.0.7.gcihrnea4z.js": "sha256-pvJcJ6jtDSfxgXm03QYRTm4aAi9PSzMSJODReHtvASY=",

@@ -1,0 +1,40 @@
+﻿@using Infraestructure.Entities;
+
+@inject ISnackbar Snackbar
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.DeleteForever" Class="mr-3 mb-n1"/>
+            ¿Desea Eliminar el libro?
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudTextField Value="@id" Label="ID del Libro: " ReadOnly="true"/>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Error" OnClick="DeleteServer">Delete Server</MudButton>
+    </DialogActions>
+</MudDialog>
+@code {
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+
+    [Parameter] public int id { get; set; } 
+    private static readonly HttpClient client = new HttpClient();
+
+    private void Cancel()
+    {
+        MudDialog.Cancel();
+    }
+
+    public async Task DeleteServer()
+    {
+        //In a real world scenario this bool would probably be a service to delete the item from api/database
+        var content = await client.DeleteAsync("https://localhost:44342" + "/api/Books/GetBooks");
+            //Imprimir en consola
+        var  response = content.Content.ReadAsStringAsync().ToString();
+        Snackbar.Add("Libro eliminado", Severity.Success);
+        //MudDialog.Close(DialogResult.Ok(server.Id));
+    }
+}

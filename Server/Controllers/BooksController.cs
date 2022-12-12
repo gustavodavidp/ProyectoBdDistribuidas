@@ -50,5 +50,18 @@ namespace LetrasBlog.Server.Controllers
             }
             return Ok(post);
         }
+
+        [Route("DeleteBooks/{id}")]
+        [HttpDelete]
+        public async Task<IActionResult> DeleteBooks(int id)
+        {
+            var post = await _RepositoryValidation.DeleteBooks(id);
+
+            if (post == null)
+            {
+                throw new BusinessExceptions("Error en eliminación");
+            }
+            return Ok(post);
+        }
     }
 }

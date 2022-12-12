@@ -163,5 +163,30 @@ namespace LetrasBlog.Client.Repositories
 
             return ArticlesData;
         }
+
+        public async Task<Books.response> DeleteBooks(int id)
+        {
+            Books.response ArticlesData = new Books.response();
+            Books.BooksDetail responseDetail = new Books.BooksDetail();
+
+            var db = dbConection();
+            var procedure = "[dbo].[DELETE_BOOKS]";
+            var parameters = new
+            {
+                ID_LIBRO = id
+            };
+
+            var Data = await db.QueryAsync<Books.Data>(procedure, parameters, commandType: CommandType.StoredProcedure);
+
+            ArticlesData = new Books.response
+            {
+                Code = 0,
+                Message = "Success Deleted"
+
+
+            };
+
+            return ArticlesData;
+        }
     }
 }
